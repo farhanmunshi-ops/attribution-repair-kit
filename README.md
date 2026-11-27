@@ -4,15 +4,17 @@ Production-tested client-side click-ID persistence scripts, Chili Piper/Calendly
 
 ## Install
 
+Install version 1.0.0 directly from GitHub with Node.js 18 or later. An npm account is optional for installing from GitHub.
+
 ```bash
-npm install attribution-repair-kit
-npx ar-validate-oct rows.json   # validate Google Ads offline conversion rows before upload
+npm install github:farhanmunshi-ops/attribution-repair-kit#v1.0.0
+npx ar-validate-oct rows.json
 ```
 
-Or load the click-ID script straight from the CDN (no build step):
+To use the click-ID script in a browser, load the same version from jsDelivr.
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/farhanmunshi-ops/attribution-repair-kit@main/scripts/first-party-click-id.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/farhanmunshi-ops/attribution-repair-kit@v1.0.0/scripts/first-party-click-id.js"></script>
 ```
 
 ## Included Utilities
