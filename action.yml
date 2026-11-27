@@ -1,0 +1,26 @@
+name: "AttributionRepair OCT Payload Validator"
+description: "Validate Google Ads Data Manager / OCT & Meta CAPI JSON payloads in CI (90-day GCLID cliff, gclid/gbraid collision, order_id dedup, E.164 & SHA-256)."
+author: "AttributionRepair (https://attributionrepair.com)"
+inputs:
+  file:
+    description: "Path to JSON conversion fixture file (object or array of rows)"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Validate offline conversion schema
+      shell: bash
+      run: |
+        node -e "
+        const fs = require(\"fs\");
+        const { validateOctRow } = await import(\"\${{ github.action_path }}/scripts/validate-oct-payload.mjs\");
+        const raw = JSON.parse(fs.readFileSync(\"\${{ inputs.file }}\", \"utf8\"));
+        const rows = Array.isArray(raw) ? raw : [raw];
+        let failed = 0;
+        rows.forEach((r, i) => {
+          const res = validateOctRow(r);
+          if (!res.ok) { failed++; console.error(\"Row\", i, res.errors); }
+        });
+        if (failed) process.exit(1);
+        console.log(\"AttributionRepair CI check passed:\", rows.length, \"valid row(s).\");
+        "
