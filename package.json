@@ -1,0 +1,23 @@
+{
+  "name": "attribution-repair-kit",
+  "version": "1.0.0",
+  "description": "Click-ID persistence (gclid, gbraid, wbraid, fbclid, li_fat_id), Chili Piper/Calendly/Typeform hidden-field bridge, Google Ads offline conversion payload validator, and BigQuery 180-day ARR reconciliation SQL.",
+  "type": "module",
+  "main": "scripts/validate-oct-payload.mjs",
+  "exports": {
+    ".": "./scripts/validate-oct-payload.mjs",
+    "./validate-oct-payload": "./scripts/validate-oct-payload.mjs",
+    "./bridge": "./scripts/chili-piper-calendly-bridge.js",
+    "./first-party-click-id": "./scripts/first-party-click-id.js",
+    "./sql/bigquery-180d-arr-reconciliation.sql": "./sql/bigquery-180d-arr-reconciliation.sql"
+  },
+  "bin": { "ar-validate-oct": "scripts/validate-oct-payload.mjs" },
+  "files": ["scripts/", "sql/", "research/", "README.md", "LICENSE"],
+  "keywords": ["gclid", "offline-conversions", "google-ads", "enhanced-conversions", "meta-capi", "hubspot", "salesforce", "chili-piper", "calendly", "server-side-gtm", "attribution", "bigquery"],
+  "homepage": "https://attributionrepair.com/official/",
+  "repository": { "type": "git", "url": "git+https://github.com/farhanmunshi-ops/attribution-repair-kit.git" },
+  "bugs": { "url": "https://github.com/farhanmunshi-ops/attribution-repair-kit/issues" },
+  "author": "AttributionRepair (https://attributionrepair.com)",
+  "license": "MIT",
+  "engines": { "node": ">=18" }
+}

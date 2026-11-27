@@ -2,6 +2,19 @@
 
 Production-tested client-side click-ID persistence scripts, Chili Piper/Calendly/Typeform iframe bridges, Google Ads Offline Conversion Tracking (OCT) payload validation, BigQuery 180-day ARR reconciliation SQL, and our **November 2026 Empirical B2B Attribution Leak Dataset** — maintained by **[AttributionRepair](https://attributionrepair.com/official/)**.
 
+## Install
+
+```bash
+npm install attribution-repair-kit
+npx ar-validate-oct rows.json   # validate Google Ads offline conversion rows before upload
+```
+
+Or load the click-ID script straight from the CDN (no build step):
+
+```html
+<script src="https://cdn.jsdelivr.net/gh/farhanmunshi-ops/attribution-repair-kit@main/scripts/first-party-click-id.js"></script>
+```
+
 ## Included Utilities
 - [`scripts/first-party-click-id.js`](scripts/first-party-click-id.js) — Persists `gclid`, `gbraid`, `wbraid`, `fbclid`, `li_fat_id`, click timestamp, and UTMs in 90-day first-party cookies.
 - [`scripts/chili-piper-calendly-bridge.js`](scripts/chili-piper-calendly-bridge.js) — Injects persisted click IDs into hidden Salesforce/HubSpot form inputs and Typeform/Calendly booking widgets.

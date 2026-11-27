@@ -24,3 +24,25 @@ export function validateOctRow(row) {
   const hashedEmail = cleanEmail.includes("@") ? crypto.createHash("sha256").update(cleanEmail).digest("hex") : null;
   return { ok: errors.length === 0, errors, hashedEmail };
 }
+
+// CLI: npx attribution-repair-kit rows.json   (a JSON array of OCT rows, or one row object; "-" reads stdin)
+import { readFileSync, realpathSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+const isMain = process.argv[1] && realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url));
+if (isMain) {
+  const src = process.argv[2];
+  if (!src) {
+    console.error("usage: ar-validate-oct <rows.json | ->\n  rows: [{gclid, order_id, click_time, conversion_time, email}, ...]");
+    process.exit(2);
+  }
+  const parsed = JSON.parse(readFileSync(src === "-" ? 0 : src, "utf8"));
+  const rows = Array.isArray(parsed) ? parsed : [parsed];
+  let bad = 0;
+  rows.forEach((row, i) => {
+    const r = validateOctRow(row);
+    if (!r.ok) bad++;
+    console.log(`${r.ok ? "OK  " : "FAIL"} row ${i + 1}${row.order_id ? ` (${row.order_id})` : ""}${r.ok ? "" : ": " + r.errors.join("; ")}`);
+  });
+  console.log(`${rows.length - bad}/${rows.length} rows pass. Interactive validator: https://attributionrepair.com/tools/payload-validator/`);
+  process.exit(bad ? 1 : 0);
+}
